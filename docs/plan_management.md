@@ -65,3 +65,7 @@
        target_date=date.today(),
    )
    ```
+
+## 预览页面
+- 打开 `docs/plan_preview.html` 可查看阶段配置的静态网页展示。
+- 页面内嵌示例数据，便于快速检查样式与内容结构。

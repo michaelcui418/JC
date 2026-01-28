@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>训练计划阶段预览</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+        background-color: #f6f7fb;
+      }
+      body {
+        margin: 0;
+        padding: 32px 24px 48px;
+      }
+      header {
+        max-width: 960px;
+        margin: 0 auto 24px;
+      }
+      h1 {
+        margin-bottom: 8px;
+        font-size: 28px;
+        color: #1f2a44;
+      }
+      p {
+        margin: 0;
+        color: #5f6b85;
+      }
+      .meta {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        color: #394763;
+        font-size: 14px;
+      }
+      .meta span {
+        background: #e8ecf6;
+        padding: 6px 12px;
+        border-radius: 16px;
+      }
+      .stage-grid {
+        max-width: 960px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+      }
+      .stage-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 10px 30px rgba(31, 42, 68, 0.08);
+        border: 1px solid #e6e9f2;
+      }
+      .stage-card h2 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        color: #1f2a44;
+      }
+      .stage-card .range {
+        font-size: 13px;
+        color: #6a768f;
+        margin-bottom: 12px;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #eff3ff;
+        color: #3c5ccf;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        margin-bottom: 12px;
+      }
+      ul {
+        margin: 0;
+        padding-left: 18px;
+        color: #394763;
+      }
+      footer {
+        max-width: 960px;
+        margin: 24px auto 0;
+        color: #7b869d;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 id="plan-title">训练计划阶段预览</h1>
+      <p id="plan-description">展示阶段配置（名称、日期范围、动作清单、训练频次）。</p>
+      <div class="meta" id="plan-meta"></div>
+    </header>
+
+    <section class="stage-grid" id="stage-grid"></section>
+
+    <footer>
+      数据来源：<code>plans/default_plan.json</code>（示例计划，可在配置中扩展）。
+    </footer>
+
+    <script id="plan-data" type="application/json">
+      {
+        "version": "1.0",
+        "name": "年度训练计划",
+        "metadata": {
+          "owner": "plan_manager",
+          "description": "示例计划，按季度划分训练阶段。"
+        },
+        "stages": [
+          {
+            "id": "foundation",
+            "name": "基础期",
+            "start_date": "2024-01-01",
+            "end_date": "2024-03-31",
+            "actions": ["建立有氧基础", "核心力量训练", "灵活性提升"],
+            "training_frequency_per_week": 3
+          },
+          {
+            "id": "build",
+            "name": "提升期",
+            "start_date": "2024-04-01",
+            "end_date": "2024-06-30",
+            "actions": ["强度渐进", "专项技巧训练", "恢复管理"],
+            "training_frequency_per_week": 4
+          },
+          {
+            "id": "peak",
+            "name": "峰值期",
+            "start_date": "2024-07-01",
+            "end_date": "2024-09-30",
+            "actions": ["比赛模拟", "速度与爆发", "心理准备"],
+            "training_frequency_per_week": 4
+          },
+          {
+            "id": "transition",
+            "name": "过渡期",
+            "start_date": "2024-10-01",
+            "end_date": "2024-12-31",
+            "actions": ["恢复性训练", "交叉训练", "总结复盘"],
+            "training_frequency_per_week": 2
+          }
+        ]
+      }
+    </script>
+    <script>
+      const plan = JSON.parse(document.getElementById("plan-data").textContent);
+      document.getElementById("plan-title").textContent = plan.name;
+      document.getElementById("plan-description").textContent = plan.metadata?.description ?? "";
+
+      const meta = document.getElementById("plan-meta");
+      const metaItems = [
+        `版本 ${plan.version}`,
+        `阶段数 ${plan.stages.length}`,
+        plan.metadata?.owner ? `负责人 ${plan.metadata.owner}` : null,
+      ].filter(Boolean);
+      metaItems.forEach((item) => {
+        const tag = document.createElement("span");
+        tag.textContent = item;
+        meta.appendChild(tag);
+      });
+
+      const grid = document.getElementById("stage-grid");
+      plan.stages.forEach((stage) => {
+        const card = document.createElement("article");
+        card.className = "stage-card";
+        card.innerHTML = `
+          <h2>${stage.name}</h2>
+          <div class="range">${stage.start_date} → ${stage.end_date}</div>
+          <div class="badge">每周训练 ${stage.training_frequency_per_week} 次</div>
+          <ul>
+            ${stage.actions.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+        `;
+        grid.appendChild(card);
+      });
+    </script>
+  </body>
+</html>
