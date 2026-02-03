@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "name": "年度训练计划",
+  "metadata": {
+    "owner": "plan_manager",
+    "description": "示例计划，按季度划分训练阶段。"
+  },
+  "stages": [
+    {
+      "id": "foundation",
+      "name": "基础期",
+      "start_date": "2024-01-01",
+      "end_date": "2024-03-31",
+      "actions": ["建立有氧基础", "核心力量训练", "灵活性提升"],
+      "training_frequency_per_week": 3
+    },
+    {
+      "id": "build",
+      "name": "提升期",
+      "start_date": "2024-04-01",
+      "end_date": "2024-06-30",
+      "actions": ["强度渐进", "专项技巧训练", "恢复管理"],
+      "training_frequency_per_week": 4
+    },
+    {
+      "id": "peak",
+      "name": "峰值期",
+      "start_date": "2024-07-01",
+      "end_date": "2024-09-30",
+      "actions": ["比赛模拟", "速度与爆发", "心理准备"],
+      "training_frequency_per_week": 4
+    },
+    {
+      "id": "transition",
+      "name": "过渡期",
+      "start_date": "2024-10-01",
+      "end_date": "2024-12-31",
+      "actions": ["恢复性训练", "交叉训练", "总结复盘"],
+      "training_frequency_per_week": 2
+    }
+  ]
+}
